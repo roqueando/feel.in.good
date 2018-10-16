@@ -1,0 +1,15 @@
+{
+    "name": "feel.in",
+    "displayName": "feel.in.good",
+    "version": "1.0.0",
+    "description": "A front end for feel.in",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Vitor Roque",
+    "license": "MIT",
+    "dependencies": {
+        "tiny-router": "^0.1.5"
+    }
+}
