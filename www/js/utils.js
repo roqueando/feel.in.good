@@ -132,9 +132,14 @@ function fetchReplies(quote) {
 
 					`);
 				}
-			}
+			} 
 		
 
+		}else {
+
+			$$("#replies .padding").html(`
+				<h1 style="color: #999">Essa citação não possui comentários. Seja o primeiro a comentar! 😜</h1>
+			`);
 		}
 		
 	}, function(err) {
@@ -146,7 +151,13 @@ function fetchReplies(quote) {
 
 
 function writeQuote() {
-
+	/*
+	$("#emoji-button").emojioneArea({
+	  	standalone: true,
+	  	autocomplete: false,
+	  	pickerPosition: 'top',
+	  	useInternalCDN: true
+	  });*/
 	if($$("#writeLine").css("display") == "none") {
 		$$("#writeLine").show();
 		$$("#writeLine").animate({
@@ -172,8 +183,85 @@ function writeQuote() {
 
 }
 
-function switchToSend() {
+function send(quote, emoji) {
 
-	var switcher = false;
-	console.log('opa');
+	app.request.post('http://localhost:8080/publish', {
+		user: localStorage.getItem('user_id'),
+		quote: quote,
+		what_u_need: emoji
+
+	}, function(response) {
+
+		console.log(response);
+
+		$("#quoteWrite").val('');
+
+		let toast = app.toast.create({
+
+			text: 'Sua citação foi publicada. 😄',
+			position: 'center',
+			closeTimeout: 2000
+
+		});
+		toast.open();
+
+
+	}, function(err) {
+
+		console.log(err);
+
+	}, 'json');
+
+}
+function chooseEmoji() {
+	const emojies = {};
+	app.request.getJSON('js/emoji.json', function(data) {
+		emojies.emojis = data;
+	});
+	
+	if($$(".emoji-picker").css("display") == "none") {
+		$$(".emoji-picker").show();
+		$$(".emoji-picker").animate({
+			'opacity': 1
+		}, {
+			duration: 300,
+			complete: function(el) {
+				// console.log(emojies.emojis['100']);
+
+				if(Object.keys(emojies.emojis).length > 0) {
+					var emoj = emojies.emojis;
+					var emoj_keys = Object.keys(emoj);
+					if($$(".emoj-btn").length > 0) {
+						$$(".emoj-btn").remove();
+					}
+
+					
+					for(var e in emoj) {
+						// to do in home, order emojis and put an id with the value of each them
+						/*
+						$$(".emoji-picker").append(`
+							<a href="#" style="font-size: 18px" class="emoj-btn" id="${emoj_keys[e]}">${emoj[e]}</a>
+						`);
+						*/
+					}
+					
+				}
+			}
+			
+		});
+
+	}else {
+		
+		$$(".emoji-picker").animate({
+			'opacity': 0
+		}, {
+			duration: 300,
+			complete: function(el) {
+				$$(".emoji-picker").hide();
+
+			}
+
+		});
+	}
+
 }

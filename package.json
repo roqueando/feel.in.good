@@ -10,6 +10,16 @@
     "author": "Vitor Roque",
     "license": "MIT",
     "dependencies": {
+        "cordova-android": "^7.0.0",
+        "cordova-plugin-whitelist": "^1.3.3",
         "tiny-router": "^0.1.5"
+    },
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-whitelist": {}
+        },
+        "platforms": [
+            "android"
+        ]
     }
 }

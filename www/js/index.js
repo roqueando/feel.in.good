@@ -16,7 +16,8 @@ var app = new Framework7({
 	view: {
 		stackPages: true,
 		animateWithJS: true
-	}
+	},
+	
 
 });
 var $$ = Dom7;
@@ -41,6 +42,10 @@ var granimInstance = new Granim({
     }
 });
 
+$$("#quoteWrite").focus(function(e) {
+	e.preventDefault();
+	console.log('clicked');
+})
 
 
 $$("#quotes-page").click(event => {
@@ -49,13 +54,10 @@ $$("#quotes-page").click(event => {
 	
 });
 
+
+
 $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
   	
   fetchQuotes();
 
-});
-
-$$('#quoteWrite').keyup(function(event) {
-
-	console.log('opa');
 });

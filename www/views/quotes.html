@@ -10,7 +10,7 @@
 	</div>
     
 
-	<div class="page-content " >
+	<div class="page-content " style="height: 90%">
 		
 
 		<!-- quotes -->
@@ -21,9 +21,15 @@
 		</div>
 
 		<div id="writeLine" class="item-input">
+			
 			<div id="inputLine" >
 				<textarea id="quoteWrite" placeholder="Estou me sentindo tão..." ></textarea>
-				<a href="#" id="emoji-button">😄</a>
+				<!-- <div data-emoji-placeholder=":smiley:" id="emoji-button"></div> -->
+				<div class="emoji-picker">
+					
+				</div>
+				<a href="#" id="send-button" onclick="send($('#quoteWrite').val(), 'coffee')"><i class="icon f7-icons">paper_plane</i></a>
+				<a href="#" id="emoji-button" onclick="chooseEmoji()">😄</a>
 			</div>
 		</div>
 		<div class="fab fab-left-bottom " style="position: fixed;">
