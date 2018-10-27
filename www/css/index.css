@@ -154,15 +154,38 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(122,81,250,1) 0%, rgb
     opacity: 0;
 }
 
-#inputLine {
-    background-color: #eee;
-    width: 70%;
+#writeLine-comment {
+    display: none;
+    border-radius: 30%;
     position: fixed;
-    left: 15%;
-    border-radius: 15px;
+    bottom: 20%;
+    opacity: 0;
 }
 
+#inputLine {
+    background-color: #e0e0e0;
+    width: 70%;
+    position: fixed;
+    left: 15% !important;
+    border-radius: 15px;
+    top: 77%;
+    z-index: 1;
+}
+
+#inputLine-comment {
+    background-color: #e0e0e0;
+    width: 70%;
+    position: fixed;
+    left: 26%;
+    border-radius: 15px;
+    top: 77%;
+    z-index: 1;
+}
 #inputLine input{
+    color: #000;
+}
+
+#inputLine-comment input{
     color: #000;
 }
 
@@ -170,13 +193,32 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(122,81,250,1) 0%, rgb
 
     padding: 5%;
     color: #000;
+    padding-bottom: 20%;
+}
+
+#quoteWrite-comment {
+
+    padding: 5%;
+    color: #000;
+    padding-bottom: 20%;
 }
 
 #emoji-button {
 
     position: absolute;
     right: 0;
-    top: 30%;
+    top: 20%;
+    font-size: 20px;
+    padding-right: 5%;
+
+}
+
+
+#emoji-button-comment {
+
+    position: absolute;
+    right: 0;
+    top: 20%;
     font-size: 20px;
     padding-right: 5%;
 
@@ -184,8 +226,16 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(122,81,250,1) 0%, rgb
 
 #send-button {
     position: absolute;
+    right: 9%;
+    top: 15%;
+    font-size: 20px;
+    padding-right: 5%;
+}
+
+#send-button-comment {
+    position: absolute;
     right: 15%;
-    top: 30%;
+    top: 15%;
     font-size: 20px;
     padding-right: 5%;
 }
@@ -215,4 +265,29 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(122,81,250,1) 0%, rgb
     border-bottom: 0;
     margin-left: -20px;
     margin-bottom: -20px;
+}
+
+.loader {
+    display: none;
+}
+
+.twemoji-textarea {
+
+    display: none;
+
+}
+
+.emj-picker {
+    position: fixed;
+    left: 82%;
+    top: 79.5%;
+
+}
+
+
+.emj-picker-comment {
+    position: fixed;
+    left: 93%;
+    top: 79.5%;
+
 }

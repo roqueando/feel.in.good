@@ -10,9 +10,12 @@
 	</div>
     
 
-	<div class="page-content " style="height: 90%">
+	<div class="page-content ptr-content" style="height: 90%">
 		
-
+		 <div class="ptr-preloader">
+		    <div class="preloader"></div>
+		    <div class="ptr-arrow"></div>
+		  </div>
 		<!-- quotes -->
 		<div id="quotes">
 			
@@ -20,16 +23,17 @@
 
 		</div>
 
-		<div id="writeLine" class="item-input">
+		<div id="writeLine" class="item-input" style="z-index: 1">
 			
 			<div id="inputLine" >
 				<textarea id="quoteWrite" placeholder="Estou me sentindo tão..." ></textarea>
 				<!-- <div data-emoji-placeholder=":smiley:" id="emoji-button"></div> -->
-				<div class="emoji-picker">
+				
+				<a href="#" id="send-button" class="button"><i class="icon f7-icons">paper_plane</i></a>
+				<div class="emj-picker">
+					<a href="#" id="emoji-button" >😄</a>
 					
 				</div>
-				<a href="#" id="send-button" onclick="send($('#quoteWrite').val(), 'coffee')"><i class="icon f7-icons">paper_plane</i></a>
-				<a href="#" id="emoji-button" onclick="chooseEmoji()">😄</a>
 			</div>
 		</div>
 		<div class="fab fab-left-bottom " style="position: fixed;">

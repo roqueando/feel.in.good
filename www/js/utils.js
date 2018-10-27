@@ -27,7 +27,6 @@ function initOrCheckUser() {
 function fetchQuotes() {
 
 	app.request.get('http://localhost:8080/quotes', function(response) {
-		
 		if(response.quotes.length > 0) {
 
 			for(let i in response.quotes) {
@@ -39,7 +38,7 @@ function fetchQuotes() {
 						<div class="col">
 							<div class="card">
 								<div class="card-header">
-									<p class="text-align-center">${response.quotes[i].who} as <i>${response.quotes[i].createdAt.getHours()}:${response.quotes[i].createdAt.getMinutes()}</i></p>
+									<p class="text-align-center">${response.quotes[i].user.name} as <i>${response.quotes[i].createdAt.getHours()}:${response.quotes[i].createdAt.getMinutes()}</i></p>
 
 								</div>
 							  <div class="card-content card-content-padding">
@@ -89,18 +88,23 @@ function fetchReplies(quote) {
 	app.router.navigate('/replies');
 	app.request.post('http://localhost:8080/replies', {quotes: quote}, function(response) {
 
-		console.log(response);
 
 		if(response.replies.length > 0) {
 
 			for(var r in response.replies) {
 				response.replies[r].createdAt = new Date(response.replies[r].createdAt);
-				if(response.replies[r].persons._id == localStorage.getItem('user_id')) {
-					$$("#replies .padding").append(`
 
-						<div class="sent-bubble padding">
+				$$("#replies").attr("data-idQuote", `${response.replies[r].quotes}`);
+				if(response.replies[r].user._id == localStorage.getItem('user_id')) {
+
+					if($(".sent-bubble padding").length > 0) {
+						$(".sent-bubble padding").remove();	
+					}
+					$$(".replies-place").append(`
+
+						<div class="sent-bubble padding" >
 							<div class="dateTimeUserSent">
-								${response.replies[r].persons.name} <i> at ${response.replies[r].createdAt.getHours()}:${response.replies[r].createdAt.getMinutes()} -- ${response.replies[r].emoji}</i>
+								${response.replies[r].user.name} <i> at ${response.replies[r].createdAt.getHours()}:${response.replies[r].createdAt.getMinutes()} </i> -- ${response.replies[r].emoji}
 
 							</div>
 							<div class="spacement-10"></div>
@@ -115,9 +119,9 @@ function fetchReplies(quote) {
 					`);
 				}else {
 
-					$$("#replies .padding").append(`
+					$$(".replies-place").append(`
 
-						<div class="received-bubble padding">
+						<div class="received-bubble padding" >
 							<div class="dateTimeUserRcv">
 								${response.replies[r].persons.name} <i> at ${response.replies[r].createdAt.getHours()}:${response.replies[r].createdAt.getMinutes()} -- ${response.replies[r].emoji}</i>
 
@@ -183,6 +187,33 @@ function writeQuote() {
 
 }
 
+
+function writeQuoteComment() {
+	
+	if($$("#writeLine-comment").css("display") == "none") {
+		$$("#writeLine-comment").show();
+		$$("#writeLine-comment").animate({
+			'opacity': 1
+		}, {
+			duration: 300,
+			
+		});
+
+	}else {
+		
+		$$("#writeLine-comment").animate({
+			'opacity': 0
+		}, {
+			duration: 300,
+			complete: function(el) {
+				$$("#writeLine-comment").hide();
+
+			}
+
+		});
+	}
+
+}
 function send(quote, emoji) {
 
 	app.request.post('http://localhost:8080/publish', {
@@ -213,55 +244,37 @@ function send(quote, emoji) {
 	}, 'json');
 
 }
-function chooseEmoji() {
-	const emojies = {};
-	app.request.getJSON('js/emoji.json', function(data) {
-		emojies.emojis = data;
-	});
-	
-	if($$(".emoji-picker").css("display") == "none") {
-		$$(".emoji-picker").show();
-		$$(".emoji-picker").animate({
-			'opacity': 1
-		}, {
-			duration: 300,
-			complete: function(el) {
-				// console.log(emojies.emojis['100']);
 
-				if(Object.keys(emojies.emojis).length > 0) {
-					var emoj = emojies.emojis;
-					var emoj_keys = Object.keys(emoj);
-					if($$(".emoj-btn").length > 0) {
-						$$(".emoj-btn").remove();
-					}
+function sendReply(quote, emoji, comment, image = "") {
 
-					
-					for(var e in emoj) {
-						// to do in home, order emojis and put an id with the value of each them
-						/*
-						$$(".emoji-picker").append(`
-							<a href="#" style="font-size: 18px" class="emoj-btn" id="${emoj_keys[e]}">${emoj[e]}</a>
-						`);
-						*/
-					}
-					
-				}
-			}
-			
-		});
+	app.request.post('http://localhost:8080/reply', {
+		user: localStorage.getItem('user_id'),
+		quotes: quote,
+		comment: comment,
+		image: image,
+		emoji: emoji
 
-	}else {
-		
-		$$(".emoji-picker").animate({
-			'opacity': 0
-		}, {
-			duration: 300,
-			complete: function(el) {
-				$$(".emoji-picker").hide();
+	}, function(response) {
 
-			}
+		console.log(response);
+
+		$("#quoteWrite-comment").val('');
+
+		let toast = app.toast.create({
+
+			text: 'Seu comentario foi publicado. 😄',
+			position: 'center',
+			closeTimeout: 2000
 
 		});
-	}
+		toast.open();
+
+
+	}, function(err) {
+
+		console.log(err);
+
+	}, 'json');
 
 }
+

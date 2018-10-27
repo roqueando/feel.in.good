@@ -16,7 +16,8 @@ var app = new Framework7({
 	view: {
 		stackPages: true,
 		animateWithJS: true
-	}
+	},
+
 
 });
 var $$ = Dom7;
@@ -42,6 +43,7 @@ var granimInstance = new Granim({
 });
 
 
+
 $$("#quoteWrite").focus(function(e) {
 	e.preventDefault();
 	console.log('clicked');
@@ -50,12 +52,26 @@ $$("#quoteWrite").focus(function(e) {
 
 $$("#quotes-page").click(event => {
 	event.preventDefault();
+
+
 	initOrCheckUser();
+	app.preloader.show();
 	
 });
 
+
+
 $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
-  	
+  
   fetchQuotes();
+  app.preloader.hide();
+
+  $('#quoteWrite').twemojiPicker({
+  	icon: 'smiley',
+  	pickerPosition: 'top'
+  });
 
 });
+
+
+

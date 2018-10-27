@@ -14,9 +14,24 @@
 		
 
 		<!-- replies -->
-		<div id="replies" style="overflow-x: hidden; ">
-			<div class="padding">
+		<div id="replies" style="overflow-x: hidden; " data-idQuote="">
+			<div class="padding replies-place">
 
+			</div>
+
+		</div>
+
+		<div id="writeLine-comment" class="item-input" style="z-index: 1">
+			
+			<div id="inputLine-comment" >
+				<textarea id="quoteWrite-comment" placeholder="Vamos conversar? 😁" ></textarea>
+				<!-- <div data-emoji-placeholder=":smiley:" id="emoji-button"></div> -->
+				
+				<a href="#" id="send-button-comment" class="button"><i class="icon f7-icons">paper_plane</i></a>
+				<div class="emj-picker-comment">
+					<a href="#" id="emoji-button-comment" >😄</a>
+					
+				</div>
 			</div>
 		</div>
 		<div class="fab fab-left-bottom " style="position: fixed;">
@@ -31,7 +46,7 @@
 
 		  
 		<div class="fab fab-extended fab-right-bottom " style="position: fixed;">
-		    <a href="#" style="background-color: #6c5ce7">
+		    <a href="#" onclick="writeQuoteComment()" style="background-color: #6c5ce7">
 		      <i class="icon f7-icons md-only">chat</i>
 		      <div class="fab-text" >Comentar</div>
 		    </a>
