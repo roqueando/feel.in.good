@@ -278,7 +278,7 @@ function myProfile() {
 			ip: localStorage.getItem("user_ip"),
 		},
 		success: function(res) {
-
+			console.log(res);
 			$$("#profile .bg").append(`
 
 				<div class="row">
@@ -318,6 +318,9 @@ function myProfile() {
 
 			`);
 
+			fetchQuoteByWho(res.user._id);
+
+
 		},
 		error: function(err) {
 
@@ -330,6 +333,57 @@ function myProfile() {
 
 function fetchQuoteByWho(who) {
 
-	
+	$.ajax({
+
+		url: `http://localhost:8080/quotes/${who}`,
+		type: "GET",
+		dataType: "json",
+		success: (response) => {
+			console.log(response);
+			if(response.quotes.length > 0) {
+				for(let i in response.quotes) {
+					response.quotes[i].createdAt = new Date(response.quotes[i].createdAt);
+
+
+					$$(`.best-quotes`).append(`
+						<div class="row padding quoting" data-idQuote="${response.quotes[i]._id}">
+							<div class="col">
+								<div class="card">
+									<div class="card-header">
+										<p class="text-align-center">${response.quotes[i].user.name} as <i>${response.quotes[i].createdAt.getHours()}:${response.quotes[i].createdAt.getMinutes()}</i></p>
+
+									</div>
+
+								  <div class="card-content card-content-padding">
+								  		
+								  		<img src="img/left-quote.png">
+								  			${response.quotes[i].quote}
+								  		<img src="img/right-quote.png">
+								  		<br>
+
+								  		-- ${response.quotes[i].what_u_need}
+
+								  </div>
+								  <div class="card-footer align-items-center text-align-center" >
+								  	
+								  	<a href="#" id="reply-button" class="button" onclick="fetchReplies('${response.quotes[i]._id}')"> ${response.quotes[i].replies.length} replies</a></div>
+								</div>
+							</div>
+							
+						</div>
+
+					`);
+
+					
+					
+
+				}
+
+			}
+		},
+		error: (err) => {
+			console.log(err);
+		}
+	});
 
 }
