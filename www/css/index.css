@@ -15,18 +15,16 @@
 
 }
 
-.spacement {
+.page-content {
 
-	width: 100%;
-	height: auto;
-	border: 30px solid transparent;
-
+    overflow-x: hidden;
 }
 
-.spacement-10 {
-    width: 100%;
-    height: auto;
-    border: 20px solid transparent;
+.spacement {
+
+	
+	border: 30px solid transparent;
+
 }
 
 #particle-js {
@@ -290,4 +288,28 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(122,81,250,1) 0%, rgb
     left: 93%;
     top: 79.5%;
 
+}
+
+.profile-avatar {
+
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    position: relative;
+    left: 24%;
+    margin-top: 10%;
+    background-color: #555;
+    box-shadow: 13px 16px 0px 0px rgba(6, 1, 1, 0.48);
+}
+
+.profile-username {
+    font-size: 30px;
+    text-align: center;
+}
+
+.bg {
+    width: 100%;
+
+    background-color: rgba(6, 6, 144, 0.71);
 }

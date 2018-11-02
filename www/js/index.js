@@ -11,7 +11,11 @@ var app = new Framework7({
 		{
 			path: '/replies',
 			url: '../views/replies.html'
-		}
+		},
+    {
+      path: '/profile',
+      url: '../views/profile.html'
+    }
 	],
 	view: {
 		stackPages: true,
@@ -60,7 +64,7 @@ $$("#quotes-page").click(event => {
 });
 
 
-
+// quotes page
 $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
   
   fetchQuotes();
@@ -69,13 +73,13 @@ $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
   $$(".ptr-content").on('ptr:refresh', function (event) {
 
 
-	if($(".quoting").length > 0) {
-		$(".quoting").remove();
-		fetchQuotes();
-	}
+  	if($(".quoting").length > 0) {
+  		$(".quoting").remove();
+  		fetchQuotes();
+  	}
 
-	app.ptr.done();
-});
+  	app.ptr.done();
+  });
 
 
   var emoj = "";
@@ -83,7 +87,7 @@ $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
   $('.emj-picker').lsxEmojiPicker({
   		
 
-  		twemoji:true,
+  		twemoji:false,
   		onSelect: function(emoji) {
   			console.log(emoji);
 
@@ -92,7 +96,7 @@ $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
 
   				if(em.getAttribute("title") == emoji.name) {
   					console.log("match!");
-  					switchEmoj = em.firstElementChild.alt;
+  					switchEmoj = em.innerHTML;
   					break;
   				}
   			}
@@ -107,15 +111,33 @@ $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
 
   $('#send-button').click(function(event) {
   	event.preventDefault();
-  	emoj.name = emoj.name.replace('-', '_');
-  	console.log(emoj.name);
 
-  	send($('#quoteWrite').val(), emoj.name);
+    if(typeof emoj == "undefined" || !emoj.hasOwnProperty('name')) {
+        let toast = app.toast.create({
+
+          text: 'Escolha um emoji',
+          position: 'center',
+          closeTimeout: 2000
+
+        });
+        toast.open();
+    }else {
+        emoj.name = emoj.name.replace(/-/g, '_');
+        console.log(emoj.name);
+
+        send($('#quoteWrite').val(), emoj.name);
+    }
+  	
+  });
+
+  $('#callProfile').click(function(event) {
+      event.preventDefault();
+      app.router.navigate('/profile');
   });
 });
 
 
-
+// replies page
 $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
   
 
@@ -125,7 +147,7 @@ $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
   $('.emj-picker-comment').lsxEmojiPicker({
   		
 
-  		twemoji:true,
+  		twemoji:false,
   		onSelect: function(emoji) {
   			console.log(emoji);
 
@@ -134,7 +156,7 @@ $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
 
   				if(em.getAttribute("title") == emoji.name) {
   					console.log("match!");
-  					switchEmojComment = em.firstElementChild.alt;
+  					switchEmojComment = em.innerHTML;
   					break;
   				}
   			}
@@ -152,18 +174,21 @@ $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
   	if(typeof emojComment == "undefined" || !emojComment.hasOwnProperty('name')) {
   		let toast = app.toast.create({
 
-			text: 'Escolha um emoji :3',
+			text: 'Escolha um emoji',
 			position: 'center',
 			closeTimeout: 2000
 
 		});
 		toast.open();
   	}else {
+
   		emojComment.name = emojComment.name.replace(/-/g, '_');
 	  	console.log(emojComment.name);
 	  	var quote = $("#replies").attr('data-idQuote');
 	  	var comment = $('#quoteWrite-comment').val();
+      
 	  	sendReply(quote, emojComment.name, comment);
+
   	}
   	
 
@@ -172,4 +197,9 @@ $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
   });
 });
 
+// profile page
+$$(document).on('page:mounted', '.page[data-name="profile"]', function(e) {
 
+  myProfile();
+  // fetch quotes By who
+});

@@ -28,7 +28,6 @@ function fetchQuotes() {
 
 	app.request.get('http://localhost:8080/quotes', function(response) {
 		if(response.quotes.length > 0) {
-
 			for(let i in response.quotes) {
 				response.quotes[i].createdAt = new Date(response.quotes[i].createdAt);
 
@@ -41,6 +40,7 @@ function fetchQuotes() {
 									<p class="text-align-center">${response.quotes[i].user.name} as <i>${response.quotes[i].createdAt.getHours()}:${response.quotes[i].createdAt.getMinutes()}</i></p>
 
 								</div>
+
 							  <div class="card-content card-content-padding">
 							  		
 							  		<img src="img/left-quote.png">
@@ -51,10 +51,9 @@ function fetchQuotes() {
 							  		-- ${response.quotes[i].what_u_need}
 
 							  </div>
-							  <div class="card-footer" >
-							  	<div id="emoji-append">
-							  	</div>
-							  	<a href="#" id="reply-button" class="link" onclick="fetchReplies('${response.quotes[i]._id}')"> ${response.quotes[i].replies.length} replies</a></div>
+							  <div class="card-footer align-items-center text-align-center" >
+							  	
+							  	<a href="#" id="reply-button" class="button" onclick="fetchReplies('${response.quotes[i]._id}')"> ${response.quotes[i].replies.length} replies</a></div>
 							</div>
 						</div>
 						
@@ -62,14 +61,7 @@ function fetchQuotes() {
 
 				`);
 
-				for(let r in response.quotes[i].replies) {
-					if(response.quotes[i].replies.length <= 3) {
-						$$("#emoji-append").append(`
-								<p>${response.quotes[i].replies[r].emoji} </p>						
-						`);
-						
-					}
-				}
+				
 				
 
 			}
@@ -103,10 +95,11 @@ function fetchReplies(quote) {
 					$$(".replies-place").append(`
 
 						<div class="sent-bubble padding" >
-							<div class="dateTimeUserSent">
+							<div class="dateTimeUserSent" style="font-size: 16px">
 								${response.replies[r].user.name} <i> at ${response.replies[r].createdAt.getHours()}:${response.replies[r].createdAt.getMinutes()} </i> -- ${response.replies[r].emoji}
 
 							</div>
+							<br>
 							<div class="spacement-10"></div>
 							<div class="sent-text">
 								${response.replies[r].comment}
@@ -122,10 +115,11 @@ function fetchReplies(quote) {
 					$$(".replies-place").append(`
 
 						<div class="received-bubble padding" >
-							<div class="dateTimeUserRcv">
-								${response.replies[r].persons.name} <i> at ${response.replies[r].createdAt.getHours()}:${response.replies[r].createdAt.getMinutes()} -- ${response.replies[r].emoji}</i>
+							<div class="dateTimeUserRcv" style="font-size: 16px">
+								${response.replies[r].user.name} <i> at ${response.replies[r].createdAt.getHours()}:${response.replies[r].createdAt.getMinutes()} </i> -- ${response.replies[r].emoji}
 
 							</div>
+							<br>
 							<div class="spacement-10"></div>
 							<div class="sent-text">
 								${response.replies[r].comment}
@@ -155,13 +149,7 @@ function fetchReplies(quote) {
 
 
 function writeQuote() {
-	/*
-	$("#emoji-button").emojioneArea({
-	  	standalone: true,
-	  	autocomplete: false,
-	  	pickerPosition: 'top',
-	  	useInternalCDN: true
-	  });*/
+
 	if($$("#writeLine").css("display") == "none") {
 		$$("#writeLine").show();
 		$$("#writeLine").animate({
@@ -278,3 +266,70 @@ function sendReply(quote, emoji, comment, image = "") {
 
 }
 
+function myProfile() {
+	
+	
+	$.ajax({
+
+		url: 'http://localhost:8080/profile',
+		type: "POST",
+		dataType: "json",
+		data: {
+			ip: localStorage.getItem("user_ip"),
+		},
+		success: function(res) {
+
+			$$("#profile .bg").append(`
+
+				<div class="row">
+					<div class="col">
+						
+						<img src="${res.user.photo}"class="profile-avatar">
+						
+							
+						
+					</div>
+				</div>
+
+				<div class="row">
+					
+					<div style="border: 10px solid transparent"></div>
+					<div class="col text-align-center">
+						<span class="profile-username">${res.user.name}</span>
+					</div>
+
+				</div>
+
+				<div class="row padding ">
+					
+					<div class="col text-align-center">
+						<button class="button" style="background-color: #74b9ff; color: #333">foto</button>
+					</div>
+					<div class="col text-align-center">
+						<button class="button" style="background-color: #00b894; color: #333">nome</button>
+					</div>
+					<div class="col text-align-center">
+						<button class="button" style="background-color: #a29bfe; color: #333">fundo</button>
+					</div>
+					
+
+				</div>
+
+
+			`);
+
+		},
+		error: function(err) {
+
+			console.log(err);
+			
+		}
+	});	
+
+}
+
+function fetchQuoteByWho(who) {
+
+	
+
+}
