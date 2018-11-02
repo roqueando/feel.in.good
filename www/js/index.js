@@ -89,13 +89,11 @@ $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
 
   		twemoji:false,
   		onSelect: function(emoji) {
-  			console.log(emoji);
 
   			for(var i in $(".lsx-emojipicker-wrapper").find("span")) {
   				var em = $(".lsx-emojipicker-wrapper").find("span")[i];
 
   				if(em.getAttribute("title") == emoji.name) {
-  					console.log("match!");
   					switchEmoj = em.innerHTML;
   					break;
   				}
@@ -123,7 +121,6 @@ $$(document).on('page:mounted', '.page[data-name="quotes"]', function (e) {
         toast.open();
     }else {
         emoj.name = emoj.name.replace(/-/g, '_');
-        console.log(emoj.name);
 
         send($('#quoteWrite').val(), emoj.name);
     }
@@ -149,13 +146,11 @@ $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
 
   		twemoji:false,
   		onSelect: function(emoji) {
-  			console.log(emoji);
 
   			for(var i in $(".lsx-emojipicker-wrapper").find("span")) {
   				var em = $(".lsx-emojipicker-wrapper").find("span")[i];
 
   				if(em.getAttribute("title") == emoji.name) {
-  					console.log("match!");
   					switchEmojComment = em.innerHTML;
   					break;
   				}
@@ -183,7 +178,6 @@ $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
   	}else {
 
   		emojComment.name = emojComment.name.replace(/-/g, '_');
-	  	console.log(emojComment.name);
 	  	var quote = $("#replies").attr('data-idQuote');
 	  	var comment = $('#quoteWrite-comment').val();
       
@@ -192,8 +186,6 @@ $$(document).on('page:mounted', '.page[data-name="replies"]', function (e) {
   	}
   	
 
-  	
-  	//send(quote, emoj.name, comment);
   });
 });
 

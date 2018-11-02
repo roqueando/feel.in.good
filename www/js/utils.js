@@ -31,7 +31,7 @@ function fetchQuotes() {
 			for(let i in response.quotes) {
 				response.quotes[i].createdAt = new Date(response.quotes[i].createdAt);
 
-
+				
 				$$(`#quotes`).append(`
 					<div class="row padding quoting" data-idQuote="${response.quotes[i]._id}">
 						<div class="col">
@@ -80,13 +80,13 @@ function fetchReplies(quote) {
 	app.router.navigate('/replies');
 	app.request.post('http://localhost:8080/replies', {quotes: quote}, function(response) {
 
-
+		$$("#replies").attr("data-idQuote", quote);
 		if(response.replies.length > 0) {
 
 			for(var r in response.replies) {
 				response.replies[r].createdAt = new Date(response.replies[r].createdAt);
 
-				$$("#replies").attr("data-idQuote", `${response.replies[r].quotes}`);
+				
 				if(response.replies[r].user._id == localStorage.getItem('user_id')) {
 
 					if($(".sent-bubble padding").length > 0) {
@@ -133,7 +133,7 @@ function fetchReplies(quote) {
 			} 
 		
 
-		}else {
+		} else {
 
 			$$("#replies .padding").html(`
 				<h1 style="color: #999">Essa citação não possui comentários. Seja o primeiro a comentar! 😜</h1>
