@@ -313,3 +313,10 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(122,81,250,1) 0%, rgb
 
     background-color: rgba(6, 6, 144, 0.71);
 }
+
+.bell-badge .badge {
+    position: fixed;
+    top: 0;
+    right: 23%;
+    background-color: #00cec9;
+}

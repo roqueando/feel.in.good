@@ -387,3 +387,10 @@ function fetchQuoteByWho(who) {
 	});
 
 }
+
+
+function openNotifs() {
+
+	app.router.navigate('/notifs');
+
+}

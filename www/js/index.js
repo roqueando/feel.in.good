@@ -15,6 +15,10 @@ var app = new Framework7({
     {
       path: '/profile',
       url: '../views/profile.html'
+    },
+    {
+      path: '/notifs',
+      url: '../views/notifs.html'
     }
 	],
 	view: {
@@ -24,6 +28,8 @@ var app = new Framework7({
 
 
 });
+
+var socket = io('http://localhost:8080');
 var $$ = Dom7;
 var mainView = app.views.create('.view-main', {
 	domCache: true
@@ -62,6 +68,7 @@ $$("#quotes-page").click(event => {
 	app.preloader.show();
 	
 });
+
 
 
 // quotes page
